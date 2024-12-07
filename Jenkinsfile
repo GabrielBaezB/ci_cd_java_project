@@ -9,8 +9,9 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Compila el proyecto Java usando Maven
+                // Asegúrate de que el script mvnw tenga permisos de ejecución
                 script {
+                    sh 'chmod +x mvnw'
                     sh './mvnw clean package'
                 }
             }
@@ -36,12 +37,13 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                // Inicializa Terraform
+                // Inicializa y aplica Terraform
                 script {
-                    sh 'cd terraform && terraform init'
-
-                    // Aplica la configuración de Terraform
-                    sh 'cd terraform && terraform apply -auto-approve'
+                    sh '''
+                        cd terraform
+                        terraform init
+                        terraform apply -auto-approve
+                    '''
                 }
             }
         }
