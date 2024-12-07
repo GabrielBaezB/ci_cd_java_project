@@ -1,7 +1,8 @@
 provider "docker" {
-  host = "unix:///var/run/docker.sock"
+  version = "~> 2.0"
+  source  = "kreuzwerker/docker"
+  host    = "unix:///var/run/docker.sock"
 }
-
 # Construcción de la imagen Docker
 resource "docker_image" "app_image" {
   name = "ci_cd_java_project"
